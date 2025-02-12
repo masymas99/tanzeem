@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalaryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
-
+use App\Http\Controllers\HolidayController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,6 +32,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendance/{id}', [AttendanceController::class, 'update'])->name('attendance.update');
     Route::delete('/attendance/{id}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
+    // راوتس الاجازات
+Route::get('/holidays', [HolidayController::class, 'index'])->name('holidays.index');
+Route::get('/holidays/{id}/edit', [HolidayController::class, 'edit'])->name('holidays.edit');
+Route::put('/holidays/{id}', [HolidayController::class, 'update'])->name('holidays.update');
+Route::post('/holidays', [HolidayController::class, 'store'])->name('holidays.store');
+Route::delete('/holidays/{id}', [HolidayController::class, 'destroy'])->name('holidays.destroy'); // تمت إضافة هذا السطر
 });
 
 require __DIR__.'/auth.php';

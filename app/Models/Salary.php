@@ -34,5 +34,6 @@ class Salary extends Model
       
 
     }
+   
 
 }

@@ -38,7 +38,7 @@
 <body>
   <x-layout title="salaries">
     <div class="container mt-4">
-      <!-- نموذج الفلاتر -->
+      <!-- نموذج البحث -->
       <form method="GET" action="{{ route('salaries.index') }}" class="mb-4">
         <div class="row g-3 align-items-end justify-content-center">
           <div class="col-md-4">
@@ -65,6 +65,7 @@
         </div>
       </form>
       
+      <!-- جدول المرتبات -->
       <table class="table table-bordered mt-3">
         <thead>
           <tr>
@@ -72,10 +73,8 @@
             <th>اسم الموظف</th>
             <th>عدد أيام الحضور</th>
             <th>عدد أيام الغياب</th>
-            <th>الإضافي بالساعات</th>
-            <th>الخصم بالساعات</th>
-            <th>إجمالي الإضافي</th>
-            <th>إجمالي الخصم</th>
+            <th>الإضافي</th>
+            <th>الخصم</th>
             <th>الصافي</th>
           </tr>
         </thead>
@@ -94,14 +93,12 @@
                 <td>{{ optional($salary->employee)->name ?? 'غير متوفر' }}</td>
                 <td>{{ $salary->total_attendance }}</td>
                 <td>{{ $salary->total_absence }}</td>
-                <td>{{ $salary->total_overtime_hours }}</td>
-                <td>{{ $salary->total_deduction_hours }}</td>
                 <td>{{ $salary->total_overtime }}</td>
                 <td>{{ $salary->total_deduction }}</td>
                 <td>{{ $salary->net_salary }}</td>
               </tr>
               
-              <!-- مودال تعديل المرتب لكل سجل -->
+              <!-- مودال تعديل المرتب -->
               <div class="modal fade" id="editSalaryModal{{ $salary->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -110,29 +107,30 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                      <!-- حقول مخفية للراتب الأساسي وتاريخ المرتب -->
+                      <input type="hidden" id="basic_salary_{{ $salary->id }}" value="{{ $salary->salary }}">
+                      <input type="hidden" id="salary_date_{{ $salary->id }}" value="{{ $salary->date }}">
+                      
                       <form method="POST" action="{{ route('salaries.update', $salary->id) }}">
                         @csrf
                         @method('PUT')
+                        
                         <label class="form-label">عدد أيام الحضور</label>
-                        <input type="number" name="total_attendance" class="form-control mb-2" value="{{ $salary->total_attendance }}" required>
+                        <!-- يسمح للمستخدم بتعديلها، ولكن إذا كانت غير متوافقة مع الحساب تلقائيًا يمكن تحديثها -->
+                        <input type="number" name="total_attendance" id="total_attendance_{{ $salary->id }}" class="form-control mb-2" value="{{ $salary->total_attendance }}" required>
                         
                         <label class="form-label">عدد أيام الغياب</label>
-                        <input type="number" name="total_absence" class="form-control mb-2" value="{{ $salary->total_absence }}" required>
+                        <input type="number" name="total_absence" id="total_absence_{{ $salary->id }}" class="form-control mb-2" value="{{ $salary->total_absence }}" required>
                         
-                        <label class="form-label">الإضافي بالساعات</label>
-                        <input type="number" name="total_overtime_hours" class="form-control mb-2" value="{{ $salary->total_overtime_hours }}" step="0.01" required>
+                        <!-- حقول الإضافي والخصم تُحسب تلقائيًا -->
+                        <label class="form-label">الإضافي</label>
+                        <input type="number" name="total_overtime" id="total_overtime_{{ $salary->id }}" class="form-control mb-2" value="{{ $salary->total_overtime }}" step="0.01" readonly required>
                         
-                        <label class="form-label">الخصم بالساعات</label>
-                        <input type="number" name="total_deduction_hours" class="form-control mb-2" value="{{ $salary->total_deduction_hours }}" step="0.01" required>
-                        
-                        <label class="form-label">إجمالي الإضافي</label>
-                        <input type="number" name="total_overtime" class="form-control mb-2" value="{{ $salary->total_overtime }}" step="0.01" required>
-                        
-                        <label class="form-label">إجمالي الخصم</label>
-                        <input type="number" name="total_deduction" class="form-control mb-2" value="{{ $salary->total_deduction }}" step="0.01" required>
+                        <label class="form-label">الخصم</label>
+                        <input type="number" name="total_deduction" id="total_deduction_{{ $salary->id }}" class="form-control mb-2" value="{{ $salary->total_deduction }}" step="0.01" readonly required>
                         
                         <label class="form-label">الصافي</label>
-                        <input type="number" name="net_salary" class="form-control mb-2" value="{{ $salary->net_salary }}" step="0.01" required>
+                        <input type="number" name="net_salary" id="net_salary_{{ $salary->id }}" class="form-control mb-2" value="{{ $salary->net_salary }}" step="0.01" readonly required>
                         
                         <button type="submit" class="btn btn-search w-100 mt-3">تعديل</button>
                       </form>
@@ -140,6 +138,82 @@
                   </div>
                 </div>
               </div>
+              
+              <!-- سكربت جافاسكريبت خاص بكل مودال لتحديث الحسابات -->
+              <script>
+                (function() {
+                  const salaryId = "{{ $salary->id }}";
+
+                  const basicSalaryInput = document.getElementById('basic_salary_' + salaryId);
+                  const salaryDateInput = document.getElementById('salary_date_' + salaryId);
+                  const totalAttendanceInput = document.getElementById('total_attendance_' + salaryId);
+                  const totalAbsenceInput = document.getElementById('total_absence_' + salaryId);
+                  const totalOvertimeInput = document.getElementById('total_overtime_' + salaryId);
+                  const totalDeductionInput = document.getElementById('total_deduction_' + salaryId);
+                  const netSalaryInput = document.getElementById('net_salary_' + salaryId);
+
+                  // ثوابت المعدلات
+                  const overtimeRate = 50; // معدل الإضافي لكل يوم زيادة
+                  const absencePenalty = 400; // عقوبة الغياب لكل يوم
+
+                  // دالة لحساب أيام العمل في الشهر مع استبعاد أيام الجمعة
+                  function calculateWorkingDays(dateStr) {
+                    const dateObj = new Date(dateStr);
+                    const year = dateObj.getFullYear();
+                    const month = dateObj.getMonth(); // الشهور تبدأ من 0
+                    const totalDays = new Date(year, month + 1, 0).getDate();
+                    let fridays = 0;
+                    for (let day = 1; day <= totalDays; day++) {
+                      const currentDate = new Date(year, month, day);
+                      if (currentDate.getDay() === 5) { // الجمعة
+                        fridays++;
+                      }
+                    }
+                    return totalDays - fridays;
+                  }
+
+                  function recalc() {
+                    const basicSalary = parseFloat(basicSalaryInput.value) || 0;
+                    const salaryDate = salaryDateInput.value; // يجب أن تكون بصيغة YYYY-MM-DD
+                    const expectedWorkingDays = calculateWorkingDays(salaryDate);
+
+                    const attendance = parseFloat(totalAttendanceInput.value) || 0;
+                    const absence = parseFloat(totalAbsenceInput.value) || 0;
+
+                    // حساب الإضافي: إذا كانت أيام الحضور أكبر من أيام العمل المتوقعة
+                    const overtime = Math.max(attendance - expectedWorkingDays, 0) * overtimeRate;
+                    totalOvertimeInput.value = overtime.toFixed(2);
+
+                    // حساب الخصم: يعتمد على عدد أيام الغياب
+                    const deduction = absence * absencePenalty;
+                    totalDeductionInput.value = deduction.toFixed(2);
+
+                    // حساب الصافي: (الراتب الأساسي / أيام العمل المتوقعة) * (أيام الحضور) + الإضافي - الخصم
+                    const netSalary = (basicSalary / expectedWorkingDays) * attendance + overtime - deduction;
+                    netSalaryInput.value = netSalary.toFixed(2);
+
+                    console.log("Modal " + salaryId + " - Attendance:", attendance, "Absence:", absence, "Net Salary:", netSalary);
+                  }
+
+                  function init() {
+                    // عند فتح المودال
+                    const modalElement = document.getElementById('editSalaryModal' + salaryId);
+                    if(modalElement) {
+                      modalElement.addEventListener('shown.bs.modal', recalc);
+                    }
+                    // عند تغيير الحقول
+                    totalAttendanceInput.addEventListener('input', recalc);
+                    totalAbsenceInput.addEventListener('input', recalc);
+                    recalc();
+                  }
+
+                  if(document.readyState === "loading") {
+                    document.addEventListener("DOMContentLoaded", init);
+                  } else {
+                    init();
+                  }
+                })();
+              </script>
             @endforeach
           @else
             <tr>

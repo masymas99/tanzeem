@@ -7,16 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfficialHoliday extends Model
 {
-    /** @use HasFactory<\Database\Factories\OfficialHolidayFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'date',
         'name',
+        'date',
     ];
-
-    public function employees()
-    {
-        return $this->belongsToMany(Employee::class);
-    }
 }

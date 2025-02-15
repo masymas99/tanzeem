@@ -1,69 +1,102 @@
-<x-layout title="Employee">
+<x-layout title="قائمة الموظفين">
 
+    <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                <div class="shadow-lg overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200" dir="rtl">
+                        <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    الإسم
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    البريد الإلكتروني
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    رقم الهاتف
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    العنوان
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    الراتب
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    الجنس
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    تاريخ الميلاد
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    رقم الهوية الوطنية
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    الجنسية
+                                </th>
+                                <th scope="col" class="relative px-6 py-3">
+                                    <span class="sr-only">تعديل</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($employees as $employee)
+                            <tr class="hover:bg-gray-100 transition duration-150 ease-in-out">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->name }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->email }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->phone }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->address }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->salary }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->gender }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->dob }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->nid_number }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ $employee->nationality }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <a href="{{ route('employees.edit', $employee->id) }}" class="text-indigo-600 hover:text-indigo-900">تعديل</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-indigo-600 hover:text-indigo-900">حذف</button>
+                                    </form>
+                                </td>
 
-    <form class="max-w-sm mx-auto mt-10">
-        <div>
-            <div class="mb-5 ">
-                <label dir="rtl"  for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الـأسم</label>
-                <input dir="rtl"  type="text" id="name" name="name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="ادخل الاسم" required />
-            </div>
-            <div class="mb-5">
-                <label dir="rtl"  for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الـعنوان</label>
-                <input dir="rtl"  type="email" id="email" name="email"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="البريد الالكتروني" required />
-            </div>
-            <div class="mb-5">
-                <label dir="rtl"  for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">رقم الـتلفون</label>
-                <input dir="rtl"  type="tel" id="phone" name="phone"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="0123456789" required />
-            </div>
-            <div class="mb-5">
-                <label dir="rtl"  for="nationality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الـجنسية</label>
-                <input dir="rtl"  type="text" id="nationality" name="nationality"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="ادخل الجنسية" required />
-            </div>   <div class="mb-5">
-                <label dir="rtl"   for="national_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الـرقم القومي</label>
-                <input dir="rtl"  type="text" id="national_id" name="national_id"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="01234567890123" required />
-            </div>
-
-
-
-            <div class="relative max-w-sm">
-                <label dir="rtl"  for="datepicker-autohide" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">تاريخ الميلاد</label>
-                <div class="absolute inset-y-0 left-0 flex items-center px-3 pointer-events-none">
-                    <svg class="mt-6 w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                    </svg>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <input dir="rtl"  id="datepicker-autohide" datepicker datepicker-autohide type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="تاريخ الميلاد">
             </div>
-
-
-
-            <label for="countries" dir="rtl"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">الـنوع</label>
-            <select id="countries" dir="rtl" name="gender"
-                class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>الـنوع</option>
-                <option value="male">ذكر</option>
-                <option value="female">أنثي</option>
-
-            </select>
         </div>
-        <div>
+    </div>
+    {{ $employees->links() }}
 
-        </div>
-
-
-        <button type="submit "
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-    </form>
-
+    <div class="mt-8 flex justify-end">
+        <a href="{{ route('employees.create') }}">
+            <button class="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">
+                إضافة موظف
+            </button>
+        </a>
+    </div>
 
 </x-layout>
+

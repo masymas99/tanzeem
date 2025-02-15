@@ -1,5 +1,5 @@
 
-    <nav style="font-family: 'Cairo', Courier, monospace;" class="bg-white border-gray-200 dark:bg-gray-900">
+<nav style="font-family: 'Cairo', Courier, monospace;" class="bg-white border-gray-200 dark:bg-gray-900">
         <div  class="bg-indigo-400 max-w-screen-x2 flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
             <span class="text-purple-900 self-center text-2xl font-semibold whitespace-nowrap dark:text-white">T A N Z E E M</span>
@@ -25,7 +25,7 @@
               <a href="#" class="font-bold block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500" aria-current="page">المرتبات</a>
             </li>
             <li>
-              <a href="#" class="font-bold  block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">الحضور</a>
+              <a href="{{ route('attendance.index') }}" class="font-bold  block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">الحضور</a>
             </li>
             <li>
               <a href="#" class="font-bold  block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">الأجازات</a>
@@ -34,7 +34,7 @@
               <a href="#" class="font-bold  block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">الإعدادات</a>
             </li>
             <li>
-                <a href="#" class="font-bold  block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">الموظفين</a>
+                <a href="{{ route('employees.index') }}" class="font-bold  block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">الموظفين</a>
               </li>
           </ul>
         </div>
@@ -50,7 +50,3 @@
             });
         });
         </script>
-
-
-
-

@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
+
+
 {
-    /** @use HasFactory<\Database\Factories\AttenndanceFactory> */
     use HasFactory;
 
+    protected $table = 'attendances';
     protected $fillable = [
         'employee_id',
-        'check_in_date',
-        'check_out_date',
+        'check_in_time',
+        'check_out_time',
         'date',
     ];
 
@@ -21,5 +23,4 @@ class Attendance extends Model
     {
         return $this->belongsTo(Employee::class);
     }
-
 }

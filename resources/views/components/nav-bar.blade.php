@@ -8,13 +8,13 @@
             <div class="navbar-nav ms-auto">
                 <ul class="navbar-nav  mb-2 mb-lg-0">
                     <li class="nav-item text-white">
-                        <a class="nav-link  aria-current="page" href="#">المرتبات</a>
+                        <a class="nav-link text-white  aria-current="page" href="#">المرتبات</a>
                     </li>
                     <li class="nav-item {{ request()->routeIs('attendance.index') ? 'active' : '' }} ms-3">
-                        <a href="{{ route('attendance.index') }}" class="nav-link text-white" href="#">الحضور</a>
+                        <a href="{{ route('attendance.index') }}" class="nav-link text-white" >الحضور</a>
                     </li>
                     <li class="nav-item ms-3">
-                        <a class="nav-link  text-white" href="#">الأجازات</a>
+                        <a class="nav-link {{ request()->routeIs('holidays.index') ? 'active' : '' }}  text-white" href="{{ route('holidays.index') }}">الأجازات</a>
                     </li>
                     <li class="nav-item ms-3 ">
                         <a class="nav-link text-white" href="#">الإعدادات</a>
@@ -50,7 +50,7 @@
     .active {
         animation: sddd 1s cubic-bezier(0.215, 0.610, 0.355, 1);
     }
-    
+
 
     @keyframes sddd {
         0% {

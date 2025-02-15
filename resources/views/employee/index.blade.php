@@ -12,28 +12,28 @@
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider">
                                     الإسم
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     البريد الإلكتروني
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     رقم الهاتف
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     العنوان
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     الراتب
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     الجنس
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     تاريخ الميلاد
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     رقم الهوية الوطنية
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">
                                     الجنسية
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">

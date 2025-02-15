@@ -8,19 +8,19 @@
             <div class="navbar-nav ms-auto">
                 <ul class="navbar-nav  mb-2 mb-lg-0">
                     <li class="nav-item text-white">
-                        <a class="nav-link active" aria-current="page" href="#">المرتبات</a>
+                        <a class="nav-link  aria-current="page" href="#">المرتبات</a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('attendance.index') ? 'active' : '' }} ms-3">
+                        <a href="{{ route('attendance.index') }}" class="nav-link text-white" href="#">الحضور</a>
                     </li>
                     <li class="nav-item ms-3">
-                        <a class="nav-link text-white" href="#">الحضور</a>
-                    </li>
-                    <li class="nav-item ms-3">
-                        <a class="nav-link text-white" href="#">الأجازات</a>
+                        <a class="nav-link  text-white" href="#">الأجازات</a>
                     </li>
                     <li class="nav-item ms-3 ">
                         <a class="nav-link text-white" href="#">الإعدادات</a>
                     </li>
                     <li class="nav-item ms-3">
-                        <a class="nav-link text-white" href="{{ route('employees.index') }}">الموظفين</a>
+                        <a class="nav-link {{ request()->routeIs('employees.index') ? 'active' : '' }} text-white" href="{{ route('employees.index') }}">الموظفين</a>
                     </li>
                 </ul>
             </div>
@@ -37,7 +37,34 @@
         </div>
     </div>
 </nav>
+<style>
+    .active {
+        border-radius: 5px;
+        color: #fff;
+        background: linear-gradient(to right, #107b59, #177594);
+        font-weight: bold;
+        border-bottom: 2px solid #080202;
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+    }
+    .active {
+        animation: sddd 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+    }
+    
 
+    @keyframes sddd {
+        0% {
+            transform: translateX(-10px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+
+</style>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

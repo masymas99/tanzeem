@@ -18,10 +18,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+   
+    Route::put('/salaries/{id}/update', [SalaryController::class, 'update'])->name('salaries.update');
+
 
     Route::get('/salaries', [SalaryController::class, 'index'])->name('salaries.index');
-    Route::get('/salaries/print/{id}', [SalaryController::class, 'print'])->name('salaries.print');
-
+    Route::get('/salaries/{id}/edit', [SalaryController::class, 'edit'])->name('salaries.edit');
+    Route::post('/salaries/{id}/update', [SalaryController::class, 'update'])->name('salaries.update');
+    Route::get('/salaries/{id}/print', [SalaryController::class, 'print'])->name('salaries.print');
     Route::resource('employees', EmployeeController::class);
 
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');

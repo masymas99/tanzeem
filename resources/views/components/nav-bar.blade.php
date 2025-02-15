@@ -17,7 +17,7 @@
                         <a class="nav-link {{ request()->routeIs('holidays.index') ? 'active' : '' }}  text-white" href="{{ route('holidays.index') }}">الأجازات</a>
                     </li>
                     <li class="nav-item ms-3 ">
-                        <a class="nav-link text-white" href="#">الإعدادات</a>
+                        <a class="nav-link {{request()->routeIs('settings.index')? 'active': ''}} text-white" href="{{ route('settings.index')}}">الإعدادات</a>
                     </li>
                     <li class="nav-item ms-3">
                         <a class="nav-link {{ request()->routeIs('employees.index') ? 'active' : '' }} text-white" href="{{ route('employees.index') }}">الموظفين</a>

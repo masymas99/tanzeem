@@ -5,6 +5,8 @@ use App\Http\Controllers\AttenndanceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OfficialHolidayController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\WeeklyHolidayController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,12 +42,18 @@ Route::middleware('auth')->group(function () {
     // mohamed-> official holiday
 
     Route::get('/holidays', [OfficialHolidayController::class, 'index'])->name('holidays.index');
-Route::get('/holidays/{id}/edit', [OfficialHolidayController::class, 'edit'])->name('holidays.edit');
-Route::put('/holidays/{id}', [OfficialHolidayController::class, 'update'])->name('holidays.update');
-Route::post('/holidays', [OfficialHolidayController::class, 'store'])->name('holidays.store');
-Route::delete('/holidays/{id}', [OfficialHolidayController::class, 'destroy'])->name('holidays.destroy');
+    Route::get('/holidays/{id}/edit', [OfficialHolidayController::class, 'edit'])->name('holidays.edit');
+    Route::put('/holidays/{id}', [OfficialHolidayController::class, 'update'])->name('holidays.update');
+    Route::post('/holidays', [OfficialHolidayController::class, 'store'])->name('holidays.store');
+    Route::delete('/holidays/{id}', [OfficialHolidayController::class, 'destroy'])->name('holidays.destroy');
 
+
+    // settings routes
+    Route::resource('settings', SettingController::class);
+
+    // weekly holiday routes
+    Route::resource('weeklyHolidays', WeeklyHolidayController::class);
 
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

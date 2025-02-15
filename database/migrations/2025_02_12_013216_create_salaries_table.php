@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('total_overtime')->default(0);
             $table->integer('total_deduction')->default(0);
             $table->integer('net_salary')->default(0);
-
+        
 
 
         });

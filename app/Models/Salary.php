@@ -9,7 +9,7 @@ class Salary extends Model
 {
     /** @use HasFactory<\Database\Factories\SalaryFactory> */
     use HasFactory;
-
+    public $timestamps = false;
     protected $fillable = [
         'employee_id',
         'salary',
@@ -26,6 +26,13 @@ class Salary extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class);
+    
+    }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'employee_id', 'employee_id');
+      
+
     }
 
 }

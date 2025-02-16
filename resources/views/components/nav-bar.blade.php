@@ -8,7 +8,7 @@
             <div class="navbar-nav ms-auto">
                 <ul class="navbar-nav  mb-2 mb-lg-0">
                     <li class="nav-item text-white">
-                        <a class="nav-link text-white  aria-current="page" href="#">المرتبات</a>
+                        <a class="nav-link text-white {{ request()->routeIs('salaries.index') ? 'active' : '' }}  aria-current="page" href="{{ route('salaries.index') }}">المرتبات</a>
                     </li>
                     <li class="nav-item {{ request()->routeIs('attendance.index') ? 'active' : '' }} ms-3">
                         <a href="{{ route('attendance.index') }}" class="nav-link text-white" >الحضور</a>

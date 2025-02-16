@@ -5,6 +5,7 @@ use App\Http\Controllers\AttenndanceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OfficialHolidayController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WeeklyHolidayController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,23 @@ Route::middleware('auth')->group(function () {
 
     // weekly holiday routes
     Route::resource('weeklyHolidays', WeeklyHolidayController::class);
+
+
+    // salaries routes
+
+
+    Route::put('/salaries/{id}/update', [SalaryController::class, 'update'])->name('salaries.update');
+
+
+    Route::get('/salaries', [SalaryController::class, 'index'])->name('salaries.index');
+    Route::get('/salaries/{id}/edit', [SalaryController::class, 'edit'])->name('salaries.edit');
+    Route::post('/salaries/{id}/update', [SalaryController::class, 'update'])->name('salaries.update');
+    Route::get('/salaries/{id}/print', [SalaryController::class, 'print'])->name('salaries.print');
+
+
+
+    Route::resource('employees', EmployeeController::class);
+
 
 });
 

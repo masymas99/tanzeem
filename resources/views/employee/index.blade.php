@@ -1,7 +1,5 @@
 <x-layout title="قائمة الموظفين">
     <h1 class="text-center mt-5 text-2xl font-bold  text-purple-600">قائمة الموظفين</h1>
-
-
     <div class="flex flex-col items-center justify-center">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
             <div class="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">

@@ -1,28 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سجل الحضور</title>
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body>
 
     <x-layout title="attendance">
-        <div class="container mt-2">
-            <div class="filter-container">
+        <div class="container">
+        <h1 class="mt-5 text-center fw-bold"> سجل الحضور</h1>
+            <div class="filter-container mt-4">
                 <form method="GET" action="{{ route('attendance.index') }}" class="mb-5 w-75">
                     <div class="row g-3 align-items-end justify-content-center">
                         <div class="col-md-1 text-center">
                             <a href="#" class="text-dark icon-print" style="font-size: 1.5rem;"
-                                onclick="window.print(); return false;">
-                                <i class="bi bi-printer"></i>
+                                onclick="window.print(); return false;"><i class="bi bi-printer"></i>
                             </a>
                         </div>
 
@@ -53,7 +38,7 @@
             </div>
 
             <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#addAttendanceModal">إضافة حضور</button>
-            <table class="table table-bordered mt-3 printable ">
+            <table class="table mt-3 printable ">
                 <thead>
                     <tr>
                         <th>العمليات</th>
@@ -143,7 +128,7 @@
                                 <input type="time" name="check_out_time" class="form-control mb-2 custom-input"
                                     required>
 
-                                <button type="submit" class="btn btn-search w-100 mt-3 fw-bold">إضافة</button>
+                                <button type="submit" class="btn btn-search w-100 mt-3 fw-bold"style="background: linear-gradient(to right, #9b59b6 30%, #6c5ce7 70%);">إضافة</button>
                             </form>
                         </div>
                     </div>
@@ -215,7 +200,7 @@
                                         class="form-control mb-2 custom-input"
                                         value="{{ $attendance->check_out_time }}" required>
 
-                                    <button type="submit" class="btn btn-search w-100 mt-3 fw-bold">تعديل</button>
+                                    <button type="submit" class="btn btn-search w-100 mt-3 fw-bold"style="background: linear-gradient(to right, #9b59b6 30%, #6c5ce7 70%);">تعديل</button>
                                 </form>
                             </div>
                         </div>
@@ -224,14 +209,27 @@
             @endforeach
 
 
-
-</body>
-
-</html>
 </x-layout>
 <style>
     body {
         font-family: 'Cairo', sans-serif;
+    }
+    h1 {
+        color: #9b59b6;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(to left, #9b59b6,  #6c5ce7);
     }
 
     .table {
@@ -242,7 +240,7 @@
     }
 
     .table th {
-        background-color: #9b59b6;
+        background:  #9b59b6 ;
         color: white;
         text-align: center;
         vertical-align: middle;
@@ -259,11 +257,16 @@
         transition: background-color 0.3s ease-in-out;
     }
 
-
-
-    .btn-search,
+    .btn-search{
+    background: linear-gradient(45deg, #9b59b6,  #6c5ce7);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 30px;
+        transition: 0.3s;
+    }
     .btn-add {
-        background-color: #6c5ce7;
+        background:  #6c5ce7;
         color: white;
         border: none;
         padding: 10px 15px;
@@ -276,11 +279,16 @@
         font-weight: bold;
 
     }
-
-    .btn-search:hover,
-    .btn-add:hover {
-        background-color: #5a4ec7;
+    .btn-search:hover{
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        color:white;
+    }
+
+    .btn-add:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        color:white;
+        transform: translateY(-4px);
+        background:  #6c5ce7;
 
     }
 
@@ -292,7 +300,7 @@
     }
 
     .btn-outline-dark {
-        background-color: #6c5ce7;
+        background: linear-gradient(45deg, #9b59b6,  #6c5ce7);
         border-radius: 30px;
         color: white;
         width: 100px;
@@ -301,13 +309,12 @@
     }
 
     .btn-outline-dark:hover {
-        background-color: #6c5ce7;
         transform: scale(1.1);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .btn-outline-dark:disabled {
-        background-color: #d3d3d3 !important;
+        background: #d3d3d3 !important;
     }
 
     .btn-add {
@@ -378,7 +385,7 @@
     }
 
     .modal-custom .modal-header {
-        background-color: #6c5ce7;
+       background: linear-gradient(to right, #9b59b6 , #6c5ce7);
         color: white;
         text-align: center;
         width: 100%;

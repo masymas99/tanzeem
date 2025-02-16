@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('weekly_holidays', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->enum('day', ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday']);
+            $table->enum('day', ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']);
         });
     }
 

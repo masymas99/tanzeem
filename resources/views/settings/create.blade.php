@@ -1,4 +1,5 @@
 <x-layout title="Settings">
+<<<<<<< HEAD
     <h1 class="text-center mt-5 text-2xl font-bold  text-purple-600">Settings</h1>
     <div class="flex justify-center mt-5">
         <form action="{{ route('settings.store') }}" method="POST">
@@ -22,3 +23,36 @@
 
 </x-layout>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اضافه الإعدادات</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+<form action="{{ route('settings.store') }}" method="POST">
+    @csrf
+    <div class="mb-3">
+        <label for="addH" class="form-label">ساعة الإضافي</label>
+        <input type="text" class="form-control" id="addH" name="addH" value="{{ old('addH')  }}">
+    </div>
+    <div class="mb-3">
+        <label for="desH" class="form-label">ساعة الخصم</label>
+        <input type="text" class="form-control" id="desH" name="desH" value="{{  old('desH')  }}">
+    </div>
+    <div class="mb-3">
+        <label for="desD" class="form-label">يوم الخصم</label>
+        <input type="text" class="form-control" id="desD" name="desD" value="{{ old('desD') }}">
+    </div>
+    <button type="submit" class="btn btn-success"> حفظ </button>
+</form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+</x-layout>
+>>>>>>> 1a5b09c (Setting and WeeklyHoliday Done)

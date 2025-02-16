@@ -5,7 +5,10 @@ use App\Http\Controllers\AttenndanceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OfficialHolidayController;
 use App\Http\Controllers\ProfileController;
+<<<<<<< HEAD
 use App\Http\Controllers\SalaryController;
+=======
+>>>>>>> 1a5b09c (Setting and WeeklyHoliday Done)
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WeeklyHolidayController;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +26,11 @@ Route::resource('employees', EmployeeController::class);
 // route::get('employees/', [EmployeeController::class, 'index'])->name('employees.index');
 // route::get('employees/create', [EmployeeController::class, 'create'])->name('employees.create');
 
+<<<<<<< HEAD
 // route::post('employees/create', [EmployeeController::class, 'store'])->name('employees.store');
 
+=======
+>>>>>>> 1a5b09c (Setting and WeeklyHoliday Done)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -69,9 +75,33 @@ Route::middleware('auth')->group(function () {
 
 
 
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::get('/settings/create', [SettingController::class, 'create'])->name('settings.create');
+    Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
+    Route::get('/settings/{setting}/edit', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
+    Route::delete('/settings/{setting}', [SettingController::class, 'destroy'])->name('settings.destroy');
+
+
+
+    Route::get('/weekly-holidays', [WeeklyHolidayController::class, 'index'])->name('weeklyHolidays.index');
+    Route::get('/weekly-holidays/create', [WeeklyHolidayController::class, 'create'])->name('weeklyHolidays.create');
+    Route::get('/weeklyHolidays/{weeklyHoliday}/edit', [WeeklyHolidayController::class, 'edit'])->name('weeklyHolidays.edit');
+    Route::put('/weeklyHolidays/{weeklyHoliday}', [WeeklyHolidayController::class, 'update'])->name('weeklyHolidays.update');
+    Route::post('/weekly-holidays', [WeeklyHolidayController::class, 'store'])->name('weeklyHolidays.store');
+    Route::delete('/weekly-holidays/{weeklyHoliday}', [WeeklyHolidayController::class, 'destroy'])->name('weeklyHolidays.destroy');
+
+
+    // Route::resource('settings', SettingController::class);
+    // Route::resource('weeklyHoliday', SettingController::class);
     Route::resource('employees', EmployeeController::class);
+<<<<<<< HEAD
 
 
 });
 
+=======
+   });
+
+>>>>>>> 1a5b09c (Setting and WeeklyHoliday Done)
 require __DIR__ . '/auth.php';

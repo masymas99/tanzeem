@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <x-layout title="Weekly Holidays">
     <h1 class="text-center mt-5 text-2xl font-bold  text-purple-600">Weekly Holidays</h1>
     <!-- #region -->
@@ -24,4 +25,36 @@
 
         </form>
     </div>
+=======
+<x-layout title="إضافة إجازة">
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إضافة إجازة جديدة</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <form action="{{ route('weeklyHolidays.store') }}" method="POST">
+        @csrf
+        <label for="day" class="form-label">اختر يوم الإجازة:</label>
+        <select name="day" id="day" class="form-control mb-3">
+            <option value="السبت">السبت</option>
+            <option value="الأحد">الأحد</option>
+            <option value="الإثنين">الإثنين</option>
+            <option value="الثلاثاء">الثلاثاء</option>
+            <option value="الأربعاء">الأربعاء</option>
+            <option value="الخميس">الخميس</option>
+            <option value="الجمعة">الجمعة</option>
+        </select>
+        <button type="submit" class="btn btn-success">إضافة</button>
+        <a href="{{ route('weeklyHolidays.index') }}" class="btn btn-secondary">إلغاء</a>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+>>>>>>> 1a5b09c (Setting and WeeklyHoliday Done)
 </x-layout>

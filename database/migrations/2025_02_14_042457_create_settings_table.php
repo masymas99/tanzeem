@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('addH');
-            $table->integer('desH');
-            $table->integer('desD');
+            $table->integer('addH')->default(150);
+            $table->integer('desH')->default(50);
+            $table->integer('desD')->default(400);
         });
     }
 

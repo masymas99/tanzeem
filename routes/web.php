@@ -11,7 +11,7 @@ use App\Http\Controllers\WeeklyHolidayController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return  view('intro.index'); ;
 });
 
 Route::get('/dashboard', function () {
@@ -70,6 +70,9 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('employees', EmployeeController::class);
+
+    //
+    
 
 
 });

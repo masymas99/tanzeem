@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Employee;
@@ -21,8 +19,8 @@ class AttendanceController extends Controller
         if ($request->has('start_date') && $request->start_date != '') {
             $query->where('date', '>=', $request->start_date);
         }
-    
-      
+
+
         if ($request->has('end_date') && $request->end_date != '') {
             $query->where('date', '<=', $request->end_date);
         }
@@ -55,24 +53,24 @@ class AttendanceController extends Controller
     public function update(Request $request, $id)
 {
     $attendance = Attendance::find($id);
-    
+
     if ($attendance) {
         $attendance->employee_id = $request->input('employee_id');
         $attendance->date = $request->input('date');
         $attendance->check_in_time = $request->input('check_in_time');
         $attendance->check_out_time = $request->input('check_out_time');
-        
+
         $attendance->save();
 
         return redirect()->route('attendance.index');
     }
-    
+
     return redirect()->route('attendance.index')->withErrors('Attendance not found');
 }
 public function destroy($id)
     {
         $attendance = Attendance::find($id);
-        
+
         if (!$attendance) {
             return redirect()->back()->with('error', 'السجل غير موجود');
         }

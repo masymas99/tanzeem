@@ -12,8 +12,9 @@ class Salary extends Model
     public $timestamps = false;
     protected $fillable = [
         'employee_id',
+        'month',     
+        'year',    
         'salary',
-        'date',
         'total_attendance',
         'total_absence',
         'total_overtime_hours',
@@ -26,14 +27,14 @@ class Salary extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class);
-    
+
     }
     public function attendances()
     {
         return $this->hasMany(Attendance::class, 'employee_id', 'employee_id');
-      
+
 
     }
-   
+
 
 }

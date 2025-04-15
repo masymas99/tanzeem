@@ -1,8 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
@@ -51,23 +55,23 @@ class AttendanceController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $attendance = Attendance::find($id);
+    {
+        $attendance = Attendance::find($id);
 
-    if ($attendance) {
-        $attendance->employee_id = $request->input('employee_id');
-        $attendance->date = $request->input('date');
-        $attendance->check_in_time = $request->input('check_in_time');
-        $attendance->check_out_time = $request->input('check_out_time');
+        if ($attendance) {
+            $attendance->employee_id = $request->input('employee_id');
+            $attendance->date = $request->input('date');
+            $attendance->check_in_time = $request->input('check_in_time');
+            $attendance->check_out_time = $request->input('check_out_time');
 
-        $attendance->save();
+            $attendance->save();
 
-        return redirect()->route('attendance.index');
+            return redirect()->route('attendance.index');
+        }
+
+        return redirect()->route('attendance.index')->withErrors('Attendance not found');
     }
-
-    return redirect()->route('attendance.index')->withErrors('Attendance not found');
-}
-public function destroy($id)
+    public function destroy($id)
     {
         $attendance = Attendance::find($id);
 
@@ -80,4 +84,5 @@ public function destroy($id)
         return redirect()->back()->with('success', 'تم حذف السجل بنجاح');
     }
 
+    // AI-related methods have been moved to ChatController
 }

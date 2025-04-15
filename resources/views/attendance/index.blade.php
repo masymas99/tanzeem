@@ -14,7 +14,23 @@
 
 <body>
 
-    <x-layout title="attendance">
+    <x-layout :title="__('Attendance')">
+        <x-slot name="header" class="flex justify-between items-center">
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Attendance') }}
+                </h2>
+                <a href="{{ route('attendance.ai-query') }}"
+                    class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    {{ __('AI Assistant') }}
+                </a>
+            </div>
+        </x-slot>
         <div class="container mt-2">
             <div class="filter-container">
                 <form method="GET" action="{{ route('attendance.index') }}" class="mb-5 w-75">

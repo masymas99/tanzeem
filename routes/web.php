@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\AttenndanceController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\OfficialHolidayController;
 use App\Http\Controllers\ProfileController;
@@ -11,13 +11,12 @@ use App\Http\Controllers\WeeklyHolidayController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return  view('intro.index'); ;
+    return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/dashboard', [
+    \App\Http\Controllers\DashboardController::class, 'index'
+])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('employees', EmployeeController::class);
 // route::get('employees/', [EmployeeController::class, 'index'])->name('employees.index');
@@ -38,6 +37,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendance/{id}', [AttendanceController::class, 'update'])->name('attendance.update');
     Route::delete('/attendance/{id}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
+    Route::get('/attendance/ai-query', [AttendanceController::class, 'showAiQuery'])->name('attendance.ai-query');
+
+    // API routes for AI queries
+    Route::post('/api/attendance/query', [AttendanceController::class, 'processAttendanceQuery']);
+    Route::post('/api/attendance/leave-query', [AttendanceController::class, 'processLeaveQuery']);
+
+    // Chat interface routes
+    Route::get('/chat', [ChatController::class, 'showChat'])->name('chat');
+    Route::post('/api/chat', [ChatController::class, 'processMessage']);
+    Route::get('/toggle-chat', function () {
+        return view('attendance.toggle-chat');
+    })->name('toggle-chat');
 
 
     // mohamed-> official holiday
@@ -66,15 +77,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/salaries/{id}/edit', [SalaryController::class, 'edit'])->name('salaries.edit');
     Route::post('/salaries/{id}/update', [SalaryController::class, 'update'])->name('salaries.update');
     Route::get('/salaries/{id}/print', [SalaryController::class, 'print'])->name('salaries.print');
+    Route::post('/salaries/calculate', [SalaryController::class, 'calculateSalaries'])->name('salaries.calculate');
+    Route::post('/salaries', [SalaryController::class, 'store'])->name('salaries.store');
 
 
 
     Route::resource('employees', EmployeeController::class);
-
-    //
-    
-
-
 });
 
 require __DIR__ . '/auth.php';

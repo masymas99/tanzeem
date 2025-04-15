@@ -27,4 +27,23 @@ class Employee extends Model
         'created_at',
         'updated_at',
     ];
+    public function attendances()
+    {
+        return $this->hasMany(Attenndance::class);
+    }
+
+    public function officialHolidays()
+    {
+        return $this->belongsToMany(OfficialHoliday::class);
+    }
+
+    public function salary()
+    {
+        return $this->hasMany(Salary::class);
+    }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
+    }
 }

@@ -8,51 +8,59 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+        $settings = Setting::all() ?? collect([]);
+        $weeklyHolidays = WeeklyHoliday::all() ?? collect([]);
 
-        $settings = Setting::all();
-        $weeklyHolidays = WeeklyHoliday::all();
         return view('settings.index', compact('settings', 'weeklyHolidays'));
     }
 
-    public function create(){
-
-
+    public function create()
+    {
         return view('settings.create');
     }
-    public function store(Request $request){
-        $request->validate([
-            'desD' => 'required',
-            'desH' => 'required',
-            'addH' => 'required',
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'desD' => 'required|numeric',
+            'desH' => 'required|numeric',
+            'addH' => 'required|numeric',
+           
         ]);
-        Setting::create($request->all());
-        return redirect()->route('settings.index')->with('success', 'Setting has been created successfully.');
+
+        Setting::create([
+            'desD' => $request->desD,
+            'desH' => $request->desH,
+            'addH' => $request->addH,
+    
+        ]);
+
+        return redirect()->route('settings.index')->with('success', 'تمت إضافة الإعدادات بنجاح.');
     }
+
     public function edit(Setting $setting)
     {
-
         return view('settings.edit', compact('setting'));
     }
 
     public function update(Request $request, Setting $setting)
     {
         $request->validate([
-            'desD' => 'required',
-            'desH' => 'required',
-            'addH' => 'required',
+            'desD' => 'required|numeric',
+            'desH' => 'required|numeric',
+            'addH' => 'required|numeric',
+          
         ]);
 
         $setting->update($request->all());
-        return redirect()->route('settings.index')->with('success', 'Setting has been updated successfully.');
+        return redirect()->route('settings.index')->with('success', 'تم تحديث الإعدادات بنجاح.');
     }
-    public function destroy(Setting $setting){
+
+    public function destroy(Setting $setting)
+    {
         $setting->delete();
-        return redirect()->route('settings.index')->with('success', 'Setting has been deleted successfully.');
+        return redirect()->route('settings.index')->with('success', 'تم حذف الإعدادات بنجاح.');
     }
-
-
-
-
 }

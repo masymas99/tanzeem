@@ -1,4 +1,5 @@
-<x-layout title="  Employee">
+<x-layout title="Add Employee">
+    
     <form action="{{ route('employees.store') }}" method="POST" class="container mt-5" dir="rtl">
         @csrf
         @method('POST')

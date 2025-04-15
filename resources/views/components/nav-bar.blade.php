@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg shadow-lg" style="background: linear-gradient(135deg, #6A5DCF, #4B46A6); font-family: 'Cairo', sans-serif;">
+<nav class="navbar navbar-expand-lg shadow-lg" style="background: linear-gradient(135deg, #6A5DCF, #4B46A6); font-family: 'Cairo', sans-serif; position: relative;">
     <div class="container-fluid px-4">
         <a class="navbar-brand text-white font-bold text-2xl tracking-wide hover:scale-105 transition-transform duration-300" href="{{ route('employees.index') }}">T A N Z E E M</a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-white"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-4">
+            <ul class="navbar-nav ms-auto gap-4">
                 <li class="nav-item">
                     <a class="nav-link text-white text-lg font-medium {{ request()->routeIs('dashboard') ? 'active' : '' }} hover:text-indigo-200 transition-colors duration-300" href="{{ route('dashboard') }}">لوحة التحكم</a>
                 </li>
@@ -49,6 +49,94 @@
 
     .nav-link:hover {
         transform: translateY(-2px);
+    }
+
+    /* Loader Styles */
+    .loader-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        backdrop-filter: blur(8px);
+        background: rgba(0, 0, 0, 0.2);
+        width: 100%;
+        height: 100%;
+        display: none;
+        text-align: center;
+    }
+
+    .loader {
+        position: relative;
+        top: 50%;
+        width: 120px;
+        height: 14px;
+        border-radius: 0 0 15px 15px;
+        background-color: #3e494d;
+        box-shadow: 0 -1px 4px #5d6063 inset;
+        animation: panex 0.5s linear alternate infinite;
+        transform-origin: 170px 0;
+        z-index: 10;
+        perspective: 300px;
+        display: inline-block;
+        margin: 0 auto;
+    }
+    
+
+    .loader::before {
+        content: '';
+        position: absolute;
+        left: calc(100% - 2px);
+        top: 0;
+        z-index: -2;
+        height: 15px;
+        width: 100px;
+        border-radius: 0 5px 5px 0;
+        background-repeat: no-repeat;
+        background-image: linear-gradient(#6c4924, #4b2d21), linear-gradient(#4d5457 30px, transparent 0), linear-gradient(#9f9e9e 30px, transparent 0);
+        background-size: 60px 15px, 5px 10px, 30px 5px;
+        background-position: right center, 20px center, 0px center;
+        transform: translateX(-50%);
+    }
+
+    .loader::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        z-index: -2;
+        transform: translate(-50%, -25px) rotate3d(75, -2, 3, 78deg);
+        width: 70px;
+        height: 65px;
+        background: #fff;
+        background-image:
+            radial-gradient(circle 4px, #fff6 90%, transparent 10%),
+            radial-gradient(circle 15px, #ffc400 90%, transparent 10%),
+            radial-gradient(circle 15px, #ffae00 100%, transparent 0);
+        background-repeat: no-repeat;
+        background-position: -5px -8px, -3px -3px, -2px -2px;
+        box-shadow: -3px -4px #0002 inset, 0 0 5px #0003 inset;
+        border-radius: 50% 45% 50% 50% / 55% 50% 45% 45%;
+        animation: eggRst 1.2s ease-out infinite;
+        transform-origin: center center;
+    }
+
+    @keyframes eggRst {
+        0%, 100% { transform: translate(-50%, -25px) rotate3d(90, 0, 0, 90deg); opacity: 0; }
+        10%, 90% { transform: translate(-50%, -35px) rotate3d(90, 0, 0, 90deg); opacity: 1; }
+        25% { transform: translate(-50%, -50px) rotate3d(85, 17, 2, 70deg); }
+        75% { transform: translate(-50%, -50px) rotate3d(75, -3, 2, 70deg); }
+        50% { transform: translate(-55%, -60px) rotate3d(75, -8, 3, 50deg); }
+    }
+    
+    @keyframes panex {
+        0% { transform: rotate(-5deg); }
+        100% { transform: rotate(10deg); }
+    }
+
+    @keyframes panex {
+        0% { transform: rotate(-8deg); }
+        100% { transform: rotate(12deg); }
     }
 
     .active {
@@ -101,70 +189,12 @@
     }
 </style>
 
-<!-- Loader Styles -->
 <style>
-    #page-loader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        display: none;
-        z-index: 9999;
-        backdrop-filter: blur(8px);
-        transition: opacity 0.5s ease;
-        opacity: 0;
-    }
+ 
 
-    #page-loader.visible {
-        opacity: 1;
-    }
+   
 
-    .sunspot-loader-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .sunspotloader {
-        position: relative;
-        width: 140px;
-        height: 140px;
-    }
-
-    .sunspotloader .sunspot {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 70%;
-        height: 70%;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #6366F1, #A5B4FC);
-        box-shadow: 0 0 50px 15px rgba(99, 102, 241, 0.4);
-        animation: pulse 1.3s ease-in-out infinite;
-    }
-
-    .sunspotloader::before,
-    .sunspotloader::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #6366F1, #A5B4FC);
-        transform: translate(-50%, -50%) scale(0);
-        animation: ripple 2.8s ease-out infinite;
-        opacity: 0;
-    }
-
-    .sunspotloader::after {
-        animation-delay: 1.4s;
-    }
+    
 
     @keyframes ripple {
         0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
@@ -208,14 +238,11 @@
     }
 </style>
 
+
+
 <!-- Loader Element -->
-<div id="page-loader">
-    <div class="sunspot-loader-container">
-        <div class="sunspotloader">
-            <div class="sunspot"></div>
-        </div>
-        <div class="loader-text mt-5">جاري التحميل...</div>
-    </div>
+<div class="loader-container">
+    <span class="loader"></span>
 </div>
 
 <!-- Bootstrap JS and dependencies -->
@@ -223,66 +250,34 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
-<!-- Loader Script -->
 <script>
-    $(document).ready(function() {
-        const $pageLoader = $('#page-loader');
-        let pageTransitionInProgress = false;
+    document.addEventListener('DOMContentLoaded', function() {
+        const loaderContainer = document.querySelector('.loader-container');
+        let isLoading = false;
 
-        // Show loader on page load
-        $pageLoader.show();
-
-        $(window).on('load', function() {
-            setTimeout(function() {
-                $pageLoader.fadeOut(500);
-                pageTransitionInProgress = false;
-            }, 300);
+        // Show loader when navigation links are clicked
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (link.getAttribute('href').startsWith('#') || link.getAttribute('target') === '_blank') {
+                    return;
+                }
+                
+                if (!isLoading) {
+                    isLoading = true;
+                    loaderContainer.style.display = 'block';
+                    
+                    // Hide loader after 6 seconds
+                    setTimeout(() => {
+                        isLoading = false;
+                        loaderContainer.style.display = 'none';
+                    }, 10000);
+                }
+            });
         });
 
-        // Handle navigation links
-        $('nav a').on('click', function(e) {
-            if (pageTransitionInProgress || !$(this).attr('href') || $(this).attr('href').includes('#') || $(this).closest('form').length) {
-                return;
-            }
-
-            e.preventDefault();
-            pageTransitionInProgress = true;
-            $pageLoader.fadeIn(300).addClass('visible');
-
-            setTimeout(() => {
-                window.location.href = $(this).attr('href');
-            }, 600);
-        });
-
-        // Handle logout form submission
-        $('form[action$="logout"]').on('submit', function(e) {
-            e.preventDefault();
-            if (!pageTransitionInProgress) {
-                pageTransitionInProgress = true;
-                $pageLoader.fadeIn(300).addClass('visible');
-                setTimeout(() => this.submit(), 600);
-            }
-        });
-
-        // Handle all form submissions
-        $('form:not(.no-loader)').on('submit', function(e) {
-            e.preventDefault();
-            if (!pageTransitionInProgress) {
-                pageTransitionInProgress = true;
-                $pageLoader.fadeIn(300).addClass('visible');
-                setTimeout(() => this.submit(), 600);
-            }
-        });
-
-        // Handle AJAX requests
-        $(document).ajaxStart(function() {
-            if (!pageTransitionInProgress) {
-                pageTransitionInProgress = true;
-                $pageLoader.fadeIn(300).addClass('visible');
-            }
-        }).ajaxStop(function() {
-            pageTransitionInProgress = false;
-            $pageLoader.fadeOut(500);
+        // Hide loader when page is loaded
+        window.addEventListener('load', function() {
+            loaderContainer.style.display = 'none';
         });
     });
 </script>

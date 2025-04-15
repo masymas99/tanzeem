@@ -25,19 +25,23 @@ public function store(Request $request)
 {
     try {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'gender' => 'required',
-            'dob' => 'required',
-            'nationality' => 'required',
-            'position' => 'required',
-            'nid_number' => 'required',
-            'joining_date' => 'required',
-            'salary' => 'required',
-            'work_start_time' => 'required',
-            'work_end_time' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:employees,email',
+            'phone' => 'required|numeric|digits:11',
+            'address' => 'required|string|max:500',
+            'gender' => 'required|in:male,female',
+            'dob' => 'required|date|before:-18 years',
+            'nationality' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'nid_number' => 'required|numeric|digits:14|unique:employees,nid_number',
+            'joining_date' => 'required|date|after_or_equal:dob',
+            'salary' => 'required|numeric|min:3000|max:50000',
+            'work_start_time' => 'required|date_format:H:i',
+            'work_end_time' => 'required|date_format:H:i|after:work_start_time',
+        ], [
+            'dob.before' => 'يجب أن يكون عمر الموظف 18 عامًا على الأقل',
+            'nid_number.unique' => 'رقم البطاقة الوطنية مسجل مسبقًا',
+            'email.unique' => 'البريد الإلكتروني مسجل مسبقًا'
         ]);
 
         $employee = new Employee([
@@ -84,14 +88,14 @@ public function update(Request $request, Employee $employee)
 
     $validated=$request->validate([
         'name' => 'required',
-        'email' => 'required|email',
-        'phone' => 'required|numeric',
+        'email' => 'required|email|unique:employees,email,'.$employee->id,
+        'phone' => 'required|numeric|digits:11',
         'address' => 'required',
         'gender' => 'required',
         'dob' => 'required|date',
         'nationality' => 'required',
         'position' => 'required',
-        'nid_number' => 'required|numeric',
+        'nid_number' => 'required|numeric|digits:14|unique:employees,nid_number,'.$employee->id,
         'joining_date' => 'required|date',
         'salary' => 'required|numeric',
         'work_start_time' => 'required',

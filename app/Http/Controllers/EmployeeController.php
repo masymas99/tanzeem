@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
-
 class EmployeeController extends Controller
 {
     public function index()
@@ -21,114 +20,125 @@ class EmployeeController extends Controller
         return view('employee.create');
     }
 
-public function store(Request $request)
-{
-    try {
-        $request->validate([
-            'name' => 'required|string|max:255',
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
             'email' => 'required|email|unique:employees,email',
             'phone' => 'required|numeric|digits:11',
-            'address' => 'required|string|max:500',
+            'address' => 'required',
             'gender' => 'required|in:male,female',
             'dob' => 'required|date|before:-18 years',
-            'nationality' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
+            'nationality' => 'required',
+            'position' => 'required',
             'nid_number' => 'required|numeric|digits:14|unique:employees,nid_number',
             'joining_date' => 'required|date|after_or_equal:dob',
             'salary' => 'required|numeric|min:3000|max:50000',
             'work_start_time' => 'required|date_format:H:i',
             'work_end_time' => 'required|date_format:H:i|after:work_start_time',
         ], [
-            'dob.before' => 'يجب أن يكون عمر الموظف 18 عامًا على الأقل',
-            'nid_number.unique' => 'رقم البطاقة الوطنية مسجل مسبقًا',
-            'email.unique' => 'البريد الإلكتروني مسجل مسبقًا'
+            'name.required' => 'الاسم مطلوب',
+            'email.required' => 'البريد الإلكتروني مطلوب',
+            'email.email' => 'يجب أن يكون البريد الإلكتروني صحيحاً',
+            'email.unique' => 'هذا البريد الإلكتروني مستخدم بالفعل',
+            'phone.required' => 'رقم الهاتف مطلوب',
+            'phone.numeric' => 'يجب أن يكون رقم الهاتف أرقام فقط',
+            'phone.digits' => 'يجب أن يكون رقم الهاتف مكوناً من 11 رقم',
+            'address.required' => 'العنوان مطلوب',
+            'gender.required' => 'النوع مطلوب',
+            'gender.in' => 'النوع يجب أن يكون ذكر أو أنثى',
+            'dob.required' => 'تاريخ الميلاد مطلوب',
+            'dob.before' => 'يجب أن يكون عمر الموظف 18 عاماً على الأقل',
+            'nationality.required' => 'الجنسية مطلوبة',
+            'position.required' => 'الوظيفة مطلوبة',
+            'nid_number.required' => 'رقم البطاقة مطلوب',
+            'nid_number.numeric' => 'يجب أن يكون رقم البطاقة أرقام فقط',
+            'nid_number.digits' => 'يجب أن يكون رقم البطاقة مكوناً من 14 رقم',
+            'nid_number.unique' => 'هذا رقم البطاقة مستخدم بالفعل',
+            'joining_date.required' => 'تاريخ التعاقد مطلوب',
+            'joining_date.after_or_equal' => 'تاريخ التعاقد يجب أن يكون بعد تاريخ الميلاد',
+            'salary.required' => 'الراتب مطلوب',
+            'salary.numeric' => 'يجب أن يكون الراتب رقم',
+            'salary.min' => 'الحد الأدنى للراتب هو 3000 جنيه',
+            'salary.max' => 'الحد الأقصى للراتب هو 50000 جنيه',
+            'work_start_time.required' => 'وقت بداية العمل مطلوب',
+            'work_end_time.required' => 'وقت نهاية العمل مطلوب',
+            'work_end_time.after' => 'وقت نهاية العمل يجب أن يكون بعد وقت بداية العمل'
         ]);
 
-        $employee = new Employee([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-            'address' => $request->get('address'),
-            'gender' => $request->get('gender'),
-            'dob' => $request->get('dob'),
-            'nationality' => $request->get('nationality'),
-            'position' => $request->get('position'),
-            'nid_number' => $request->get('nid_number'),
-            'joining_date' => $request->get('joining_date'),
-            'salary' => $request->get('salary'),
-            'work_start_time' => $request->get('work_start_time'),
-            'work_end_time' => $request->get('work_end_time'),
-        ]);
+        Employee::create($validated);
 
-        $employee->save();
-
-        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
-
-    } catch (ValidationException $e) {
-        return back()->withErrors($e->errors())->withInput();
+        return redirect()->route('employees.create')->with('success', 'تم إضافة الموظف بنجاح');
     }
 
+    public function show($id)
+    {
+        $employee = Employee::findOrFail($id);
+        return view('employee.show', compact('employee'));
+    }
 
+    public function edit(Employee $employee)
+    {
+        return view('employee.edit', compact('employee'));
+    }
 
+    public function update(Request $request, Employee $employee)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:employees,email,' . $employee->id,
+            'phone' => 'required|numeric|digits:11',
+            'address' => 'required',
+            'gender' => 'required|in:male,female',
+            'dob' => 'required|date|before:-18 years',
+            'nationality' => 'required',
+            'position' => 'required',
+            'nid_number' => 'required|numeric|digits:14|unique:employees,nid_number,' . $employee->id,
+            'joining_date' => 'required|date|after_or_equal:dob',
+            'salary' => 'required|numeric|min:3000|max:50000',
+            'work_start_time' => 'required|date_format:H:i',
+            'work_end_time' => 'required|date_format:H:i|after:work_start_time',
+        ], [
+            'name.required' => 'الاسم مطلوب',
+            'email.required' => 'البريد الإلكتروني مطلوب',
+            'email.email' => 'يجب أن يكون البريد الإلكتروني صحيحاً',
+            'email.unique' => 'هذا البريد الإلكتروني مستخدم بالفعل',
+            'phone.required' => 'رقم الهاتف مطلوب',
+            'phone.numeric' => 'يجب أن يكون رقم الهاتف أرقام فقط',
+            'phone.digits' => 'يجب أن يكون رقم الهاتف مكوناً من 11 رقم',
+            'address.required' => 'العنوان مطلوب',
+            'gender.required' => 'النوع مطلوب',
+            'gender.in' => 'النوع يجب أن يكون ذكر أو أنثى',
+            'dob.required' => 'تاريخ الميلاد مطلوب',
+            'dob.before' => 'يجب أن يكون عمر الموظف 18 عاماً على الأقل',
+            'nationality.required' => 'الجنسية مطلوبة',
+            'position.required' => 'الوظيفة مطلوبة',
+            'nid_number.required' => 'رقم البطاقة مطلوب',
+            'nid_number.numeric' => 'يجب أن يكون رقم البطاقة أرقام فقط',
+            'nid_number.digits' => 'يجب أن يكون رقم البطاقة مكوناً من 14 رقم',
+            'nid_number.unique' => 'هذا رقم البطاقة مستخدم بالفعل',
+            'joining_date.required' => 'تاريخ التعاقد مطلوب',
+            'joining_date.after_or_equal' => 'تاريخ التعاقد يجب أن يكون بعد تاريخ الميلاد',
+            'salary.required' => 'الراتب مطلوب',
+            'salary.numeric' => 'يجب أن يكون الراتب رقم',
+            'salary.min' => 'الحد الأدنى للراتب هو 3000 جنيه',
+            'salary.max' => 'الحد الأقصى للراتب هو 50000 جنيه',
+            'work_start_time.required' => 'وقت بداية العمل مطلوب',
+            'work_end_time.required' => 'وقت نهاية العمل مطلوب',
+            'work_end_time.after' => 'وقت نهاية العمل يجب أن يكون بعد وقت بداية العمل'
+        ]);
 
-}
-public function show($id)
-{
-    $employee = Employee::find($id);
-    return view('employee.show', compact('employee'));
-}
-public function edit(Employee $employee)
-{
-    return view('employee.edit', compact('employee'));
+        $employee->update($validated);
 
-}
+        return redirect()->route('employees.index')->with('success', 'تم تحديث بيانات الموظف بنجاح');
+    }
 
-public function update(Request $request, Employee $employee)
-{
-
-    $validated=$request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:employees,email,'.$employee->id,
-        'phone' => 'required|numeric|digits:11',
-        'address' => 'required',
-        'gender' => 'required',
-        'dob' => 'required|date',
-        'nationality' => 'required',
-        'position' => 'required',
-        'nid_number' => 'required|numeric|digits:14|unique:employees,nid_number,'.$employee->id,
-        'joining_date' => 'required|date',
-        'salary' => 'required|numeric',
-        'work_start_time' => 'required',
-        'work_end_time' => 'required',
-    ]);
-
-    $employee->update([
-        'name' => $validated['name'],
-        'email' => $validated['email'],
-        'phone' => $validated['phone'],
-        'address' => $validated['address'],
-        'gender' => $validated['gender'],
-        'dob' => $validated['dob'],
-        'nationality' => $validated['nationality'],
-        'position' => $validated['position'],
-        'nid_number' => $validated['nid_number'],
-        'joining_date' => $validated['joining_date'],
-        'salary' => $validated['salary'],
-        'work_start_time' => $validated['work_start_time'],
-        'work_end_time' => $validated['work_end_time'],
-    ]);
-
-    return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
-
-}
-public function destroy($id)
-{
-    $employee = Employee::find($id);
-    if ($employee) {
+    public function destroy($id)
+    {
+        $employee = Employee::findOrFail($id);
         $employee->delete();
-        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
+        return redirect()->route('employees.index')->with('success', 'تم حذف الموظف بنجاح');
     }
-    return redirect()->route('employees.index')->with('error', 'Employee not found.');
-    }
-}
 
+
+}

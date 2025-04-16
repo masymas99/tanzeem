@@ -20,6 +20,8 @@
 
 <body style="font-family: 'Cairo', Courier, monospace;">
     <x-navbar />
+    <x-toast-notification />
+    <x-delete-confirmation-dialog />
     {{ $slot }}
 
 

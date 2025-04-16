@@ -11,12 +11,29 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // جلب جميع بيانات الموظفين
+        $employees = \App\Models\Employee::all();
+        
+        // حساب مجموع الرواتب الأساسية
+        $basicSalaries = $employees->sum('salary');
+        
+        // حساب مجموع الرواتب الإجمالية
+        $totalSalaries = $employees->sum('total_salary');
+        
+        // تجهيز البيانات للعرض
+        $stats = [
+            'basicSalaries' => $basicSalaries,
+            'totalSalaries' => $totalSalaries,
+        ];
+
         // Get current month and year
         $currentMonth = now()->month;
         $currentYear = now()->year;
 
         // Basic Statistics
         $stats = [
+            'basicSalaries' => $basicSalaries,
+            'totalSalaries' => $totalSalaries,
             'totalEmployees' => Employee::count(),
             'totalSalaries' => Salary::sum('salary'),
             'yearlySalaries' => Salary::where('year', $currentYear)
